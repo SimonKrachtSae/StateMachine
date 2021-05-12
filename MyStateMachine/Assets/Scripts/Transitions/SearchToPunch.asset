@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7acc7746ccdf0624a83c94346ccfd761, type: 3}
+  m_Name: SearchToPunch
+  m_EditorClassIdentifier: 
+  from: {fileID: 11400000, guid: 41f64decc549ace4aa919d9900463e41, type: 2}
+  to: {fileID: 11400000, guid: d74c4a9f00b87ce44b02d3c4c33751dc, type: 2}
+  parameter: {fileID: 11400000, guid: 5797e405287600145883d44d2ca6563d, type: 2}
+  PassOnFalse: 1

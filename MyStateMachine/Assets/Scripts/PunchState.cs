@@ -2,19 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Punch : State
+[CreateAssetMenu(fileName = "Punch", menuName = "ScriptableObjects/Punch", order = 3)]
+public class PunchState : State
 {
-    public override bool isCondition()
-    {
-        if(ai.TargetInAttackRange())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
     public override void StartState()
     {
         ai.animator.SetBool("isPunching", true);

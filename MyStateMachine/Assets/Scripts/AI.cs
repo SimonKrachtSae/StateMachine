@@ -5,32 +5,45 @@ using System;
 
 public class AI : MonoBehaviour
 {
+    public static AI Instance;
+
     public List<Transform> patrolPoints;
     public Transform targetTransform;
     public Animator animator;
-    private BaseStateMachine baseStateMachine;
-    private void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
-        baseStateMachine = new BaseStateMachine(this);
-    }
+    public StateMachine StateMachine;
+    public Sight sight;
+    public bool searching = false;
+    public bool chasing = false;
     private void OnDestroy()
     {
         AIManager.Instance.UnSubscribe(this);
     }
     private void Start()
     {
+        sight = GetComponentInChildren<Sight>();
+        StateMachine = transform.GetComponent<StateMachine>();
         AIManager.Instance.Subscribe(this);
-        baseStateMachine.AddStates();
     }
     private void Update()
     {
-        baseStateMachine.RunStates();
+
+        TargetInAttackRange();
+
+        if(TargetInSight())
+        {
+            chasing = true;
+            StateMachine.SetParameter("TargetInSight", true);
+        }
+        else if(chasing)
+        {
+            chasing = false;
+            StateMachine.SetParameter("TargetInSight",false);
+        }
+
     }
     public bool TargetInSight()
     {
-        float lookOutRange = 10;
-        if ((targetTransform.position - transform.position).magnitude <= lookOutRange && !TargetInAttackRange())
+        if(sight.targetInSight && !TargetInAttackRange())
             return true;
         else
             return false;
@@ -38,8 +51,15 @@ public class AI : MonoBehaviour
     public bool TargetInAttackRange()
     {
         if ((targetTransform.position - transform.position).magnitude <= 1.25f)
+        {
+            StateMachine.SetParameter("TargetInAttackRange", true);
             return true;
+        }
         else
+        {
+            StateMachine.SetParameter("TargetInAttackRange", false);
             return false;
+        }
     }
+
 }
